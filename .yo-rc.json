@@ -38,5 +38,12 @@
     "otherModules": [],
     "entitySuffix": "",
     "dtoSuffix": "DTO"
+  },
+  "generator-jhipster-kotlin": {
+    "jhipsterVersion": "5.8.2",
+    "applicationType": "monolith",
+    "baseName": "jhipster",
+    "useSass": true,
+    "clientPackageManager": "npm"
   }
 }
