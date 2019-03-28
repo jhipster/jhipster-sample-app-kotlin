@@ -35,8 +35,18 @@
     "cacheProvider": "ehcache",
     "enableHibernateCache": true,
     "reactive": false,
-    "otherModules": [],
+    "otherModules": [ {
+      "name": "generator-jhipster-kotlin",
+      "version": "^0.7.0"
+    }],
     "entitySuffix": "",
     "dtoSuffix": "DTO"
+  },
+  "generator-jhipster-kotlin": {
+    "jhipsterVersion": "5.8.2",
+    "applicationType": "monolith",
+    "baseName": "jhipster",
+    "useSass": true,
+    "clientPackageManager": "npm"
   }
 }
