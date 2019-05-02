@@ -1,0 +1,78 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="bankAccount">
+            <h2><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.detail.title">Bank Account</span> {{bankAccount.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.name">Name</span></dt>
+                <dd>
+                    <span>{{bankAccount.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.bankNumber">Bank Number</span></dt>
+                <dd>
+                    <span>{{bankAccount.bankNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.agencyNumber">Agency Number</span></dt>
+                <dd>
+                    <span>{{bankAccount.agencyNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.lastOperationDuration">Last Operation Duration</span></dt>
+                <dd>
+                    <span>{{bankAccount.lastOperationDuration}}</span>
+                </dd>
+                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.meanOperationDuration">Mean Operation Duration</span></dt>
+                <dd>
+                    <span>{{bankAccount.meanOperationDuration}}</span>
+                </dd>
+                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.balance">Balance</span></dt>
+                <dd>
+                    <span>{{bankAccount.balance}}</span>
+                </dd>
+                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.openingDay">Opening Day</span></dt>
+                <dd>
+                    <span>{{bankAccount.openingDay}}</span>
+                </dd>
+                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.lastOperationDate">Last Operation Date</span></dt>
+                <dd>
+                    <span>{{bankAccount.lastOperationDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.active">Active</span></dt>
+                <dd>
+                    <span>{{bankAccount.active}}</span>
+                </dd>
+                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.accountType">Account Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'jhipsterSampleApplicationApp.BankAccountType.' + bankAccount.accountType}}">{{bankAccount.accountType}}</span>
+                </dd>
+                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.attachment">Attachment</span></dt>
+                <dd>
+                    <div *ngIf="bankAccount.attachment">
+                        <a (click)="openFile(bankAccount.attachmentContentType, bankAccount.attachment)" jhiTranslate="entity.action.open">open</a>
+                        {{bankAccount.attachmentContentType}}, {{byteSize(bankAccount.attachment)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.description">Description</span></dt>
+                <dd>
+                    <span>{{bankAccount.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.user">User</span></dt>
+                <dd>
+                    {{bankAccount.userLogin}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/bank-account-my-suffix', bankAccount.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

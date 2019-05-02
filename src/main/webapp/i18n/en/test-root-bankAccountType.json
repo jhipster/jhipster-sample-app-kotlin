@@ -1,0 +1,10 @@
+{
+  "jhipsterSampleApplicationApp": {
+    "BankAccountType": {
+      "null": "",
+      "CHECKING": "CHECKING",
+      "SAVINGS": "SAVINGS",
+      "LOAN": "LOAN"
+    }
+  }
+}

@@ -23,9 +23,9 @@
       "en"
     ],
     "serverPort": 8080,
-    "jhipsterVersion": "5.8.2",
+    "jhipsterVersion": "6.0.0",
     "enableSocialSignIn": false,
-    "useSass": false,
+    "useSass": true,
     "jhiPrefix": "jhi",
     "messageBroker": false,
     "serviceDiscoveryType": false,
@@ -35,12 +35,16 @@
     "cacheProvider": "ehcache",
     "enableHibernateCache": true,
     "reactive": false,
-    "otherModules": [ {
-      "name": "generator-jhipster-kotlin",
-      "version": "^0.7.0"
-    }],
+    "otherModules": [
+      {
+        "name": "generator-jhipster-kotlin",
+        "version": "latest"
+      }
+    ],
     "entitySuffix": "",
-    "dtoSuffix": "DTO"
+    "dtoSuffix": "DTO",
+    "clientTheme": "none",
+    "blueprint": "generator-jhipster-kotlin"
   },
   "generator-jhipster-kotlin": {
     "jhipsterVersion": "5.8.2",
