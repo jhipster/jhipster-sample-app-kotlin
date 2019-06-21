@@ -11,12 +11,12 @@ import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
 import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
-import { JhipsterSampleApplicationSharedModule } from 'app/shared';
-import { JhipsterSampleApplicationCoreModule } from 'app/core';
-import { JhipsterSampleApplicationAppRoutingModule } from './app-routing.module';
-import { JhipsterSampleApplicationHomeModule } from './home/home.module';
-import { JhipsterSampleApplicationAccountModule } from './account/account.module';
-import { JhipsterSampleApplicationEntityModule } from './entities/entity.module';
+import { JhipsterSharedModule } from 'app/shared';
+import { JhipsterCoreModule } from 'app/core';
+import { JhipsterAppRoutingModule } from './app-routing.module';
+import { JhipsterHomeModule } from './home/home.module';
+import { JhipsterAccountModule } from './account/account.module';
+import { JhipsterEntityModule } from './entities/entity.module';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
@@ -32,13 +32,13 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
       i18nEnabled: true,
       defaultI18nLang: 'en'
     }),
-    JhipsterSampleApplicationSharedModule.forRoot(),
-    JhipsterSampleApplicationCoreModule,
-    JhipsterSampleApplicationHomeModule,
-    JhipsterSampleApplicationAccountModule,
+    JhipsterSharedModule.forRoot(),
+    JhipsterCoreModule,
+    JhipsterHomeModule,
+    JhipsterAccountModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
-    JhipsterSampleApplicationEntityModule,
-    JhipsterSampleApplicationAppRoutingModule
+    JhipsterEntityModule,
+    JhipsterAppRoutingModule
   ],
   declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   providers: [
@@ -65,7 +65,7 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
   ],
   bootstrap: [JhiMainComponent]
 })
-export class JhipsterSampleApplicationAppModule {
+export class JhipsterAppModule {
   constructor(private dpConfig: NgbDatepickerConfig) {
     this.dpConfig.minDate = { year: moment().year() - 100, month: 1, day: 1 };
   }

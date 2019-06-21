@@ -1,29 +1,29 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="operation">
-            <h2><span jhiTranslate="jhipsterSampleApplicationApp.testRootOperation.detail.title">Operation</span> {{operation.id}}</h2>
+            <h2><span jhiTranslate="jhipsterApp.testRootOperation.detail.title">Operation</span> {{operation.id}}</h2>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootOperation.date">Date</span></dt>
+                <dt><span jhiTranslate="jhipsterApp.testRootOperation.date">Date</span></dt>
                 <dd>
                     <span>{{operation.date}}</span>
                 </dd>
-                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootOperation.description">Description</span></dt>
+                <dt><span jhiTranslate="jhipsterApp.testRootOperation.description">Description</span></dt>
                 <dd>
                     <span>{{operation.description}}</span>
                 </dd>
-                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootOperation.amount">Amount</span></dt>
+                <dt><span jhiTranslate="jhipsterApp.testRootOperation.amount">Amount</span></dt>
                 <dd>
                     <span>{{operation.amount}}</span>
                 </dd>
-                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootOperation.bankAccount">Bank Account</span></dt>
+                <dt><span jhiTranslate="jhipsterApp.testRootOperation.bankAccount">Bank Account</span></dt>
                 <dd>
                     <div *ngIf="operation.bankAccount">
                         <a [routerLink]="['/bank-account-my-suffix', operation.bankAccount?.id, 'view']">{{operation.bankAccount?.name}}</a>
                     </div>
                 </dd>
-                <dt><span jhiTranslate="jhipsterSampleApplicationApp.testRootOperation.label">Label</span></dt>
+                <dt><span jhiTranslate="jhipsterApp.testRootOperation.label">Label</span></dt>
                 <dd>
                     <span *ngFor="let label of operation.labels; let last = last">
                         <a [routerLink]="['/label', label?.id, 'view' ]">{{label.labelName}}</a>{{last ? '' : ', '}}

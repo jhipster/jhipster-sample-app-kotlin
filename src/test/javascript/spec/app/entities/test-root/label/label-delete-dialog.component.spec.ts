@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { JhipsterSampleApplicationTestModule } from '../../../../test.module';
+import { JhipsterTestModule } from '../../../../test.module';
 import { LabelDeleteDialogComponent } from 'app/entities/test-root/label/label-delete-dialog.component';
 import { LabelService } from 'app/entities/test-root/label/label.service';
 
@@ -18,7 +18,7 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [JhipsterSampleApplicationTestModule],
+        imports: [JhipsterTestModule],
         declarations: [LabelDeleteDialogComponent]
       })
         .overrideTemplate(LabelDeleteDialogComponent, '')

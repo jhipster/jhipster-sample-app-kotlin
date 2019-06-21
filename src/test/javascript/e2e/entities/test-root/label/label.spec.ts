@@ -25,13 +25,13 @@ describe('Label e2e test', () => {
     await navBarPage.goToEntity('label');
     labelComponentsPage = new LabelComponentsPage();
     await browser.wait(ec.visibilityOf(labelComponentsPage.title), 5000);
-    expect(await labelComponentsPage.getTitle()).to.eq('jhipsterSampleApplicationApp.testRootLabel.home.title');
+    expect(await labelComponentsPage.getTitle()).to.eq('jhipsterApp.testRootLabel.home.title');
   });
 
   it('should load create Label page', async () => {
     await labelComponentsPage.clickOnCreateButton();
     labelUpdatePage = new LabelUpdatePage();
-    expect(await labelUpdatePage.getPageTitle()).to.eq('jhipsterSampleApplicationApp.testRootLabel.home.createOrEditLabel');
+    expect(await labelUpdatePage.getPageTitle()).to.eq('jhipsterApp.testRootLabel.home.createOrEditLabel');
     await labelUpdatePage.cancel();
   });
 
@@ -52,7 +52,7 @@ describe('Label e2e test', () => {
     await labelComponentsPage.clickOnLastDeleteButton();
 
     labelDeleteDialog = new LabelDeleteDialog();
-    expect(await labelDeleteDialog.getDialogTitle()).to.eq('jhipsterSampleApplicationApp.testRootLabel.delete.question');
+    expect(await labelDeleteDialog.getDialogTitle()).to.eq('jhipsterApp.testRootLabel.delete.question');
     await labelDeleteDialog.clickOnConfirmButton();
 
     expect(await labelComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);

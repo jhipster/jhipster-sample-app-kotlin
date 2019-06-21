@@ -56,8 +56,7 @@ export class JhiLanguageHelper {
   }
 
   private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
-    let title: string =
-      routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'jhipsterSampleApplicationApp';
+    let title: string = routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'jhipsterApp';
     if (routeSnapshot.firstChild) {
       title = this.getPageTitle(routeSnapshot.firstChild) || title;
     }

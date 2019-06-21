@@ -4,7 +4,7 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 
-import { JhipsterSampleApplicationTestModule } from '../../../../test.module';
+import { JhipsterTestModule } from '../../../../test.module';
 import { BankAccountMySuffixUpdateComponent } from 'app/entities/test-root/bank-account-my-suffix/bank-account-my-suffix-update.component';
 import { BankAccountMySuffixService } from 'app/entities/test-root/bank-account-my-suffix/bank-account-my-suffix.service';
 import { BankAccountMySuffix } from 'app/shared/model/test-root/bank-account-my-suffix.model';
@@ -17,7 +17,7 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [JhipsterSampleApplicationTestModule],
+        imports: [JhipsterTestModule],
         declarations: [BankAccountMySuffixUpdateComponent],
         providers: [FormBuilder]
       })

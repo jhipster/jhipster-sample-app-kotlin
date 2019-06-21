@@ -1,6 +1,6 @@
 package io.github.jhipster.sample.web.rest;
 
-import io.github.jhipster.sample.JhipsterSampleApplicationApp;
+import io.github.jhipster.sample.JhipsterApp;
 import io.github.jhipster.sample.config.audit.AuditEventConverter;
 import io.github.jhipster.sample.domain.PersistentAuditEvent;
 import io.github.jhipster.sample.repository.PersistenceAuditEventRepository;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Integration tests for the {@link AuditResource} REST controller.
  */
-@SpringBootTest(classes = JhipsterSampleApplicationApp.class)
+@SpringBootTest(classes = JhipsterApp.class)
 @Transactional
 public class AuditResourceIT {
 

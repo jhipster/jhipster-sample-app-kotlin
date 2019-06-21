@@ -4,7 +4,7 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 
-import { JhipsterSampleApplicationTestModule } from '../../../../test.module';
+import { JhipsterTestModule } from '../../../../test.module';
 import { OperationUpdateComponent } from 'app/entities/test-root/operation/operation-update.component';
 import { OperationService } from 'app/entities/test-root/operation/operation.service';
 import { Operation } from 'app/shared/model/test-root/operation.model';
@@ -17,7 +17,7 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [JhipsterSampleApplicationTestModule],
+        imports: [JhipsterTestModule],
         declarations: [OperationUpdateComponent],
         providers: [FormBuilder]
       })

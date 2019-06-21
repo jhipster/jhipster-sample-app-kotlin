@@ -16,7 +16,6 @@ import { IUser, UserService } from 'app/core';
   templateUrl: './bank-account-my-suffix-update.component.html'
 })
 export class BankAccountMySuffixUpdateComponent implements OnInit {
-  bankAccount: IBankAccountMySuffix;
   isSaving: boolean;
 
   users: IUser[];
@@ -53,7 +52,6 @@ export class BankAccountMySuffixUpdateComponent implements OnInit {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ bankAccount }) => {
       this.updateForm(bankAccount);
-      this.bankAccount = bankAccount;
     });
     this.userService
       .query()
@@ -131,7 +129,7 @@ export class BankAccountMySuffixUpdateComponent implements OnInit {
   }
 
   private createFromForm(): IBankAccountMySuffix {
-    const entity = {
+    return {
       ...new BankAccountMySuffix(),
       id: this.editForm.get(['id']).value,
       name: this.editForm.get(['name']).value,
@@ -152,11 +150,10 @@ export class BankAccountMySuffixUpdateComponent implements OnInit {
       description: this.editForm.get(['description']).value,
       userId: this.editForm.get(['userId']).value
     };
-    return entity;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IBankAccountMySuffix>>) {
-    result.subscribe((res: HttpResponse<IBankAccountMySuffix>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
   }
 
   protected onSaveSuccess() {

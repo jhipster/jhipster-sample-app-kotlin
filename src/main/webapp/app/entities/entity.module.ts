@@ -6,15 +6,15 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
         path: 'bank-account-my-suffix',
-        loadChildren: './test-root/bank-account-my-suffix/bank-account-my-suffix.module#JhipsterSampleApplicationBankAccountMySuffixModule'
+        loadChildren: './test-root/bank-account-my-suffix/bank-account-my-suffix.module#JhipsterBankAccountMySuffixModule'
       },
       {
         path: 'label',
-        loadChildren: './test-root/label/label.module#JhipsterSampleApplicationLabelModule'
+        loadChildren: './test-root/label/label.module#JhipsterLabelModule'
       },
       {
         path: 'operation',
-        loadChildren: './test-root/operation/operation.module#JhipsterSampleApplicationOperationModule'
+        loadChildren: './test-root/operation/operation.module#JhipsterOperationModule'
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])
@@ -24,4 +24,4 @@ import { RouterModule } from '@angular/router';
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class JhipsterSampleApplicationEntityModule {}
+export class JhipsterEntityModule {}

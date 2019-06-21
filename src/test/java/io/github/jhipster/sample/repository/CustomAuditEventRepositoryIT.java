@@ -1,6 +1,6 @@
 package io.github.jhipster.sample.repository;
 
-import io.github.jhipster.sample.JhipsterSampleApplicationApp;
+import io.github.jhipster.sample.JhipsterApp;
 import io.github.jhipster.sample.config.Constants;
 import io.github.jhipster.sample.config.audit.AuditEventConverter;
 import io.github.jhipster.sample.domain.PersistentAuditEvent;
@@ -27,7 +27,7 @@ import static io.github.jhipster.sample.repository.CustomAuditEventRepository.EV
 /**
  * Integration tests for {@link CustomAuditEventRepository}.
  */
-@SpringBootTest(classes = JhipsterSampleApplicationApp.class)
+@SpringBootTest(classes = JhipsterApp.class)
 @Transactional
 public class CustomAuditEventRepositoryIT {
 

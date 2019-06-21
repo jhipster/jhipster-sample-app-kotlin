@@ -39,7 +39,7 @@ export const labelRoute: Routes = [
     data: {
       authorities: ['ROLE_USER'],
       defaultSort: 'id,asc',
-      pageTitle: 'jhipsterSampleApplicationApp.testRootLabel.home.title'
+      pageTitle: 'jhipsterApp.testRootLabel.home.title'
     },
     canActivate: [UserRouteAccessService]
   },
@@ -51,7 +51,7 @@ export const labelRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      pageTitle: 'jhipsterSampleApplicationApp.testRootLabel.home.title'
+      pageTitle: 'jhipsterApp.testRootLabel.home.title'
     },
     canActivate: [UserRouteAccessService]
   },
@@ -63,7 +63,7 @@ export const labelRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      pageTitle: 'jhipsterSampleApplicationApp.testRootLabel.home.title'
+      pageTitle: 'jhipsterApp.testRootLabel.home.title'
     },
     canActivate: [UserRouteAccessService]
   },
@@ -75,7 +75,7 @@ export const labelRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      pageTitle: 'jhipsterSampleApplicationApp.testRootLabel.home.title'
+      pageTitle: 'jhipsterApp.testRootLabel.home.title'
     },
     canActivate: [UserRouteAccessService]
   }
@@ -90,7 +90,7 @@ export const labelPopupRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      pageTitle: 'jhipsterSampleApplicationApp.testRootLabel.home.title'
+      pageTitle: 'jhipsterApp.testRootLabel.home.title'
     },
     canActivate: [UserRouteAccessService],
     outlet: 'popup'

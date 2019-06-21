@@ -1,33 +1,36 @@
 <div>
     <h2 id="page-heading">
-        <span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.home.title">Bank Accounts</span>
+        <span jhiTranslate="jhipsterApp.testRootBankAccount.home.title">Bank Accounts</span>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-bank-account-my-suffix" [routerLink]="['/bank-account-my-suffix/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
-            <span  jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.home.createLabel">
+            <span  jhiTranslate="jhipsterApp.testRootBankAccount.home.createLabel">
             Create new Bank Account
             </span>
         </button>
     </h2>
     <jhi-alert></jhi-alert>
     <br/>
-    <div class="table-responsive" *ngIf="bankAccounts">
+    <div class="alert alert-warning" *ngIf="bankAccounts?.length === 0">
+        <span jhiTranslate="jhipsterApp.testRootBankAccount.home.notFound">No bankAccounts found</span>
+    </div>
+    <div class="table-responsive" *ngIf="bankAccounts?.length > 0">
         <table class="table table-striped">
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.name">Name</span></th>
-            <th><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.bankNumber">Bank Number</span></th>
-            <th><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.agencyNumber">Agency Number</span></th>
-            <th><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.lastOperationDuration">Last Operation Duration</span></th>
-            <th><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.meanOperationDuration">Mean Operation Duration</span></th>
-            <th><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.balance">Balance</span></th>
-            <th><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.openingDay">Opening Day</span></th>
-            <th><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.lastOperationDate">Last Operation Date</span></th>
-            <th><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.active">Active</span></th>
-            <th><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.accountType">Account Type</span></th>
-            <th><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.attachment">Attachment</span></th>
-            <th><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.description">Description</span></th>
-            <th><span jhiTranslate="jhipsterSampleApplicationApp.testRootBankAccount.user">User</span></th>
+            <th><span jhiTranslate="jhipsterApp.testRootBankAccount.name">Name</span></th>
+            <th><span jhiTranslate="jhipsterApp.testRootBankAccount.bankNumber">Bank Number</span></th>
+            <th><span jhiTranslate="jhipsterApp.testRootBankAccount.agencyNumber">Agency Number</span></th>
+            <th><span jhiTranslate="jhipsterApp.testRootBankAccount.lastOperationDuration">Last Operation Duration</span></th>
+            <th><span jhiTranslate="jhipsterApp.testRootBankAccount.meanOperationDuration">Mean Operation Duration</span></th>
+            <th><span jhiTranslate="jhipsterApp.testRootBankAccount.balance">Balance</span></th>
+            <th><span jhiTranslate="jhipsterApp.testRootBankAccount.openingDay">Opening Day</span></th>
+            <th><span jhiTranslate="jhipsterApp.testRootBankAccount.lastOperationDate">Last Operation Date</span></th>
+            <th><span jhiTranslate="jhipsterApp.testRootBankAccount.active">Active</span></th>
+            <th><span jhiTranslate="jhipsterApp.testRootBankAccount.accountType">Account Type</span></th>
+            <th><span jhiTranslate="jhipsterApp.testRootBankAccount.attachment">Attachment</span></th>
+            <th><span jhiTranslate="jhipsterApp.testRootBankAccount.description">Description</span></th>
+            <th><span jhiTranslate="jhipsterApp.testRootBankAccount.user">User</span></th>
             <th></th>
             </tr>
             </thead>
@@ -43,7 +46,7 @@
                 <td>{{bankAccount.openingDay | date:'mediumDate'}}</td>
                 <td>{{bankAccount.lastOperationDate | date:'medium'}}</td>
                 <td>{{bankAccount.active}}</td>
-                <td jhiTranslate="{{'jhipsterSampleApplicationApp.BankAccountType.' + bankAccount.accountType}}">{{bankAccount.accountType}}</td>
+                <td jhiTranslate="{{'jhipsterApp.BankAccountType.' + bankAccount.accountType}}">{{bankAccount.accountType}}</td>
                 <td>
                     <a *ngIf="bankAccount.attachment" (click)="openFile(bankAccount.attachmentContentType, bankAccount.attachment)" jhiTranslate="entity.action.open">open</a>
                     <span *ngIf="bankAccount.attachment">{{bankAccount.attachmentContentType}}, {{byteSize(bankAccount.attachment)}}</span>

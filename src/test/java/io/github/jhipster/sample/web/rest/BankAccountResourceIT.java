@@ -1,6 +1,6 @@
 package io.github.jhipster.sample.web.rest;
 
-import io.github.jhipster.sample.JhipsterSampleApplicationApp;
+import io.github.jhipster.sample.JhipsterApp;
 import io.github.jhipster.sample.domain.BankAccount;
 import io.github.jhipster.sample.domain.User;
 import io.github.jhipster.sample.domain.Operation;
@@ -44,7 +44,7 @@ import io.github.jhipster.sample.domain.enumeration.BankAccountType;
 /**
  * Integration tests for the {@Link BankAccountResource} REST controller.
  */
-@SpringBootTest(classes = JhipsterSampleApplicationApp.class)
+@SpringBootTest(classes = JhipsterApp.class)
 public class BankAccountResourceIT {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
@@ -149,6 +149,29 @@ public class BankAccountResourceIT {
             .attachment(DEFAULT_ATTACHMENT)
             .attachmentContentType(DEFAULT_ATTACHMENT_CONTENT_TYPE)
             .description(DEFAULT_DESCRIPTION);
+        return bankAccount;
+    }
+    /**
+     * Create an updated entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static BankAccount createUpdatedEntity(EntityManager em) {
+        BankAccount bankAccount = new BankAccount()
+            .name(UPDATED_NAME)
+            .bankNumber(UPDATED_BANK_NUMBER)
+            .agencyNumber(UPDATED_AGENCY_NUMBER)
+            .lastOperationDuration(UPDATED_LAST_OPERATION_DURATION)
+            .meanOperationDuration(UPDATED_MEAN_OPERATION_DURATION)
+            .balance(UPDATED_BALANCE)
+            .openingDay(UPDATED_OPENING_DAY)
+            .lastOperationDate(UPDATED_LAST_OPERATION_DATE)
+            .active(UPDATED_ACTIVE)
+            .accountType(UPDATED_ACCOUNT_TYPE)
+            .attachment(UPDATED_ATTACHMENT)
+            .attachmentContentType(UPDATED_ATTACHMENT_CONTENT_TYPE)
+            .description(UPDATED_DESCRIPTION);
         return bankAccount;
     }
 
@@ -946,7 +969,7 @@ public class BankAccountResourceIT {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 
-        // Validate the database is empty
+        // Validate the database contains one less item
         List<BankAccount> bankAccountList = bankAccountRepository.findAll();
         assertThat(bankAccountList).hasSize(databaseSizeBeforeDelete - 1);
     }

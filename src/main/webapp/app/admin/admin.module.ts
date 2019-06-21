@@ -2,7 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { JhiLanguageService } from 'ng-jhipster';
 import { JhiLanguageHelper } from 'app/core';
-import { JhipsterSampleApplicationSharedModule } from 'app/shared';
+import { JhipsterSharedModule } from 'app/shared';
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 import {
@@ -22,9 +22,9 @@ import {
 
 @NgModule({
   imports: [
-    JhipsterSampleApplicationSharedModule,
-    RouterModule.forChild(adminState)
+    JhipsterSharedModule,
     /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
+    RouterModule.forChild(adminState)
   ],
   declarations: [
     AuditsComponent,
@@ -43,7 +43,7 @@ import {
   entryComponents: [UserMgmtDeleteDialogComponent, JhiHealthModalComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class JhipsterSampleApplicationAdminModule {
+export class JhipsterAdminModule {
   constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
     this.languageHelper.language.subscribe((languageKey: string) => {
       if (languageKey !== undefined) {

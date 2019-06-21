@@ -15,7 +15,6 @@ import { OperationService } from 'app/entities/test-root/operation';
   templateUrl: './label-update.component.html'
 })
 export class LabelUpdateComponent implements OnInit {
-  label: ILabel;
   isSaving: boolean;
 
   operations: IOperation[];
@@ -37,7 +36,6 @@ export class LabelUpdateComponent implements OnInit {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ label }) => {
       this.updateForm(label);
-      this.label = label;
     });
     this.operationService
       .query()
@@ -70,16 +68,15 @@ export class LabelUpdateComponent implements OnInit {
   }
 
   private createFromForm(): ILabel {
-    const entity = {
+    return {
       ...new Label(),
       id: this.editForm.get(['id']).value,
       labelName: this.editForm.get(['labelName']).value
     };
-    return entity;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ILabel>>) {
-    result.subscribe((res: HttpResponse<ILabel>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
   }
 
   protected onSaveSuccess() {

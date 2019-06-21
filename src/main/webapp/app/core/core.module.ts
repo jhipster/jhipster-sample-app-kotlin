@@ -21,7 +21,7 @@ import { NgbDateMomentAdapter } from 'app/shared/util/datepicker-adapter';
     DatePipe
   ]
 })
-export class JhipsterSampleApplicationCoreModule {
+export class JhipsterCoreModule {
   constructor() {
     registerLocaleData(locale);
   }

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
-import { JhipsterSampleApplicationTestModule } from '../../../../test.module';
+import { JhipsterTestModule } from '../../../../test.module';
 import { OperationDetailComponent } from 'app/entities/test-root/operation/operation-detail.component';
 import { Operation } from 'app/shared/model/test-root/operation.model';
 
@@ -15,7 +15,7 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [JhipsterSampleApplicationTestModule],
+        imports: [JhipsterTestModule],
         declarations: [OperationDetailComponent],
         providers: [{ provide: ActivatedRoute, useValue: route }]
       })

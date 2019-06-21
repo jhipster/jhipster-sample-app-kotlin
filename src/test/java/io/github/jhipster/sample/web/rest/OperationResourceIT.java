@@ -1,6 +1,6 @@
 package io.github.jhipster.sample.web.rest;
 
-import io.github.jhipster.sample.JhipsterSampleApplicationApp;
+import io.github.jhipster.sample.JhipsterApp;
 import io.github.jhipster.sample.domain.Operation;
 import io.github.jhipster.sample.repository.OperationRepository;
 import io.github.jhipster.sample.web.rest.errors.ExceptionTranslator;
@@ -38,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Integration tests for the {@Link OperationResource} REST controller.
  */
-@SpringBootTest(classes = JhipsterSampleApplicationApp.class)
+@SpringBootTest(classes = JhipsterApp.class)
 public class OperationResourceIT {
 
     private static final Instant DEFAULT_DATE = Instant.ofEpochMilli(0L);
@@ -98,6 +98,19 @@ public class OperationResourceIT {
             .date(DEFAULT_DATE)
             .description(DEFAULT_DESCRIPTION)
             .amount(DEFAULT_AMOUNT);
+        return operation;
+    }
+    /**
+     * Create an updated entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Operation createUpdatedEntity(EntityManager em) {
+        Operation operation = new Operation()
+            .date(UPDATED_DATE)
+            .description(UPDATED_DESCRIPTION)
+            .amount(UPDATED_AMOUNT);
         return operation;
     }
 
@@ -317,7 +330,7 @@ public class OperationResourceIT {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 
-        // Validate the database is empty
+        // Validate the database contains one less item
         List<Operation> operationList = operationRepository.findAll();
         assertThat(operationList).hasSize(databaseSizeBeforeDelete - 1);
     }

@@ -29,13 +29,13 @@ describe('BankAccount e2e test', () => {
     await navBarPage.goToEntity('bank-account-my-suffix');
     bankAccountComponentsPage = new BankAccountComponentsPage();
     await browser.wait(ec.visibilityOf(bankAccountComponentsPage.title), 5000);
-    expect(await bankAccountComponentsPage.getTitle()).to.eq('jhipsterSampleApplicationApp.testRootBankAccount.home.title');
+    expect(await bankAccountComponentsPage.getTitle()).to.eq('jhipsterApp.testRootBankAccount.home.title');
   });
 
   it('should load create BankAccount page', async () => {
     await bankAccountComponentsPage.clickOnCreateButton();
     bankAccountUpdatePage = new BankAccountUpdatePage();
-    expect(await bankAccountUpdatePage.getPageTitle()).to.eq('jhipsterSampleApplicationApp.testRootBankAccount.home.createOrEditLabel');
+    expect(await bankAccountUpdatePage.getPageTitle()).to.eq('jhipsterApp.testRootBankAccount.home.createOrEditLabel');
     await bankAccountUpdatePage.cancel();
   });
 
@@ -101,7 +101,7 @@ describe('BankAccount e2e test', () => {
     await bankAccountComponentsPage.clickOnLastDeleteButton();
 
     bankAccountDeleteDialog = new BankAccountDeleteDialog();
-    expect(await bankAccountDeleteDialog.getDialogTitle()).to.eq('jhipsterSampleApplicationApp.testRootBankAccount.delete.question');
+    expect(await bankAccountDeleteDialog.getDialogTitle()).to.eq('jhipsterApp.testRootBankAccount.delete.question');
     await bankAccountDeleteDialog.clickOnConfirmButton();
 
     expect(await bankAccountComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);

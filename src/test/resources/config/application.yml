@@ -15,10 +15,10 @@
 
 spring:
   application:
-    name: jhipsterSampleApplication
+    name: jhipster
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:mem:jhipsterSampleApplication;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:jhipster;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MULTI_THREADED=FALSE
     name:
     username:
     password:
@@ -55,13 +55,13 @@ spring:
       enabled: false
   task:
     execution:
-      thread-name-prefix: jhipster-sample-application-task-
+      thread-name-prefix: jhipster-task-
       pool:
         core-size: 1
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: jhipster-sample-application-scheduling-
+      thread-name-prefix: jhipster-scheduling-
       pool:
         size: 1
   thymeleaf:
@@ -79,7 +79,7 @@ server:
 
 jhipster:
   clientApp:
-    name: 'jhipsterSampleApplicationApp'
+    name: 'jhipsterApp'
   logging:
     # To test json console appender
     use-json-format: true # By default, logs are in Json format

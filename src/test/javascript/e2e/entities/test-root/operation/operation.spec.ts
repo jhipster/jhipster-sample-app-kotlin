@@ -25,13 +25,13 @@ describe('Operation e2e test', () => {
     await navBarPage.goToEntity('operation');
     operationComponentsPage = new OperationComponentsPage();
     await browser.wait(ec.visibilityOf(operationComponentsPage.title), 5000);
-    expect(await operationComponentsPage.getTitle()).to.eq('jhipsterSampleApplicationApp.testRootOperation.home.title');
+    expect(await operationComponentsPage.getTitle()).to.eq('jhipsterApp.testRootOperation.home.title');
   });
 
   it('should load create Operation page', async () => {
     await operationComponentsPage.clickOnCreateButton();
     operationUpdatePage = new OperationUpdatePage();
-    expect(await operationUpdatePage.getPageTitle()).to.eq('jhipsterSampleApplicationApp.testRootOperation.home.createOrEditLabel');
+    expect(await operationUpdatePage.getPageTitle()).to.eq('jhipsterApp.testRootOperation.home.createOrEditLabel');
     await operationUpdatePage.cancel();
   });
 
@@ -60,7 +60,7 @@ describe('Operation e2e test', () => {
     await operationComponentsPage.clickOnLastDeleteButton();
 
     operationDeleteDialog = new OperationDeleteDialog();
-    expect(await operationDeleteDialog.getDialogTitle()).to.eq('jhipsterSampleApplicationApp.testRootOperation.delete.question');
+    expect(await operationDeleteDialog.getDialogTitle()).to.eq('jhipsterApp.testRootOperation.delete.question');
     await operationDeleteDialog.clickOnConfirmButton();
 
     expect(await operationComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);

@@ -4,7 +4,7 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 
-import { JhipsterSampleApplicationTestModule } from '../../../../test.module';
+import { JhipsterTestModule } from '../../../../test.module';
 import { LabelUpdateComponent } from 'app/entities/test-root/label/label-update.component';
 import { LabelService } from 'app/entities/test-root/label/label.service';
 import { Label } from 'app/shared/model/test-root/label.model';
@@ -17,7 +17,7 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [JhipsterSampleApplicationTestModule],
+        imports: [JhipsterTestModule],
         declarations: [LabelUpdateComponent],
         providers: [FormBuilder]
       })
