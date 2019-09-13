@@ -1,11 +1,6 @@
 import { Moment } from 'moment';
 import { IOperation } from 'app/shared/model/test-root/operation.model';
-
-export const enum BankAccountType {
-  CHECKING = 'CHECKING',
-  SAVINGS = 'SAVINGS',
-  LOAN = 'LOAN'
-}
+import { BankAccountType } from 'app/shared/model/enumerations/bank-account-type.model';
 
 export interface IBankAccountMySuffix {
   id?: number;

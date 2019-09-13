@@ -4,7 +4,7 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-bank-account-my-suffix" [routerLink]="['/bank-account-my-suffix/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="jhipsterApp.testRootBankAccount.home.createLabel">
-            Create new Bank Account
+            Create a new Bank Account
             </span>
         </button>
     </h2>
@@ -14,7 +14,7 @@
         <span jhiTranslate="jhipsterApp.testRootBankAccount.home.notFound">No bankAccounts found</span>
     </div>
     <div class="table-responsive" *ngIf="bankAccounts?.length > 0">
-        <table class="table table-striped">
+        <table class="table table-striped" aria-describedby="page-heading">
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
@@ -70,7 +70,7 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', 'bank-account-my-suffix', { outlets: { popup: bankAccount.id + '/delete'} }]"
+                                [routerLink]="['/bank-account-my-suffix', { outlets: { popup: bankAccount.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

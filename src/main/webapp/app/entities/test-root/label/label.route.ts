@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiPaginationUtil, JhiResolvePagingParams } from 'ng-jhipster';
-import { UserRouteAccessService } from 'app/core';
+import { JhiResolvePagingParams } from 'ng-jhipster';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Label } from 'app/shared/model/test-root/label.model';
@@ -18,7 +18,7 @@ export class LabelResolve implements Resolve<ILabel> {
   constructor(private service: LabelService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ILabel> {
-    const id = route.params['id'] ? route.params['id'] : null;
+    const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
         filter((response: HttpResponse<Label>) => response.ok),

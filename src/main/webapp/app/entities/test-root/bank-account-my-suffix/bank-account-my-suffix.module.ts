@@ -1,18 +1,15 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
-import { JhiLanguageHelper } from 'app/core';
 
-import { JhipsterSharedModule } from 'app/shared';
+import { JhipsterSharedModule } from 'app/shared/shared.module';
+import { BankAccountMySuffixComponent } from './bank-account-my-suffix.component';
+import { BankAccountMySuffixDetailComponent } from './bank-account-my-suffix-detail.component';
+import { BankAccountMySuffixUpdateComponent } from './bank-account-my-suffix-update.component';
 import {
-  BankAccountMySuffixComponent,
-  BankAccountMySuffixDetailComponent,
-  BankAccountMySuffixUpdateComponent,
   BankAccountMySuffixDeletePopupComponent,
-  BankAccountMySuffixDeleteDialogComponent,
-  bankAccountRoute,
-  bankAccountPopupRoute
-} from './';
+  BankAccountMySuffixDeleteDialogComponent
+} from './bank-account-my-suffix-delete-dialog.component';
+import { bankAccountRoute, bankAccountPopupRoute } from './bank-account-my-suffix.route';
 
 const ENTITY_STATES = [...bankAccountRoute, ...bankAccountPopupRoute];
 
@@ -30,16 +27,6 @@ const ENTITY_STATES = [...bankAccountRoute, ...bankAccountPopupRoute];
     BankAccountMySuffixUpdateComponent,
     BankAccountMySuffixDeleteDialogComponent,
     BankAccountMySuffixDeletePopupComponent
-  ],
-  providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  ]
 })
-export class JhipsterBankAccountMySuffixModule {
-  constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
-    this.languageHelper.language.subscribe((languageKey: string) => {
-      if (languageKey !== undefined) {
-        this.languageService.changeLanguage(languageKey);
-      }
-    });
-  }
-}
+export class JhipsterBankAccountMySuffixModule {}

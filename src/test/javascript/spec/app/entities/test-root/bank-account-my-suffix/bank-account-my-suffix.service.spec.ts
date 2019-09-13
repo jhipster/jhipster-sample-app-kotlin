@@ -1,13 +1,11 @@
-/* tslint:disable max-line-length */
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { of } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_FORMAT, DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { BankAccountMySuffixService } from 'app/entities/test-root/bank-account-my-suffix/bank-account-my-suffix.service';
-import { IBankAccountMySuffix, BankAccountMySuffix, BankAccountType } from 'app/shared/model/test-root/bank-account-my-suffix.model';
+import { IBankAccountMySuffix, BankAccountMySuffix } from 'app/shared/model/test-root/bank-account-my-suffix.model';
+import { BankAccountType } from 'app/shared/model/enumerations/bank-account-type.model';
 
 describe('Service Tests', () => {
   describe('BankAccountMySuffix Service', () => {
@@ -46,7 +44,7 @@ describe('Service Tests', () => {
     });
 
     describe('Service methods', () => {
-      it('should find an element', async () => {
+      it('should find an element', () => {
         const returnedFromService = Object.assign(
           {
             openingDay: currentDate.format(DATE_FORMAT),
@@ -64,7 +62,7 @@ describe('Service Tests', () => {
         expect(expectedResult).toMatchObject({ body: elemDefault });
       });
 
-      it('should create a BankAccountMySuffix', async () => {
+      it('should create a BankAccountMySuffix', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
@@ -89,7 +87,7 @@ describe('Service Tests', () => {
         expect(expectedResult).toMatchObject({ body: expected });
       });
 
-      it('should update a BankAccountMySuffix', async () => {
+      it('should update a BankAccountMySuffix', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
@@ -124,7 +122,7 @@ describe('Service Tests', () => {
         expect(expectedResult).toMatchObject({ body: expected });
       });
 
-      it('should return a list of BankAccountMySuffix', async () => {
+      it('should return a list of BankAccountMySuffix', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
@@ -162,8 +160,8 @@ describe('Service Tests', () => {
         expect(expectedResult).toContainEqual(expected);
       });
 
-      it('should delete a BankAccountMySuffix', async () => {
-        const rxPromise = service.delete(123).subscribe(resp => (expectedResult = resp.ok));
+      it('should delete a BankAccountMySuffix', () => {
+        service.delete(123).subscribe(resp => (expectedResult = resp.ok));
 
         const req = httpMock.expectOne({ method: 'DELETE' });
         req.flush({ status: 200 });
