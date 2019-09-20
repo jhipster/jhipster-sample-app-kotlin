@@ -22,11 +22,6 @@ const ENTITY_STATES = [...bankAccountRoute, ...bankAccountPopupRoute];
     BankAccountMySuffixDeleteDialogComponent,
     BankAccountMySuffixDeletePopupComponent
   ],
-  entryComponents: [
-    BankAccountMySuffixComponent,
-    BankAccountMySuffixUpdateComponent,
-    BankAccountMySuffixDeleteDialogComponent,
-    BankAccountMySuffixDeletePopupComponent
-  ]
+  entryComponents: [BankAccountMySuffixDeleteDialogComponent]
 })
 export class JhipsterBankAccountMySuffixModule {}
