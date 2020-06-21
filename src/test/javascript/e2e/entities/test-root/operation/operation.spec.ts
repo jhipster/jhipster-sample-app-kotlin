@@ -1,8 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { browser, ExpectedConditions as ec, protractor, promise } from 'protractor';
 import { NavBarPage, SignInPage } from '../../../page-objects/jhi-page-objects';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { OperationComponentsPage, OperationDeleteDialog, OperationUpdatePage } from './operation.page-object';
 
 const expect = chai.expect;
@@ -10,8 +8,8 @@ const expect = chai.expect;
 describe('Operation e2e test', () => {
   let navBarPage: NavBarPage;
   let signInPage: SignInPage;
-  let operationUpdatePage: OperationUpdatePage;
   let operationComponentsPage: OperationComponentsPage;
+  let operationUpdatePage: OperationUpdatePage;
   let operationDeleteDialog: OperationDeleteDialog;
 
   before(async () => {
@@ -27,6 +25,7 @@ describe('Operation e2e test', () => {
     operationComponentsPage = new OperationComponentsPage();
     await browser.wait(ec.visibilityOf(operationComponentsPage.title), 5000);
     expect(await operationComponentsPage.getTitle()).to.eq('jhipsterApp.testRootOperation.home.title');
+    await browser.wait(ec.or(ec.visibilityOf(operationComponentsPage.entities), ec.visibilityOf(operationComponentsPage.noResult)), 1000);
   });
 
   it('should load create Operation page', async () => {
@@ -40,16 +39,19 @@ describe('Operation e2e test', () => {
     const nbButtonsBeforeCreate = await operationComponentsPage.countDeleteButtons();
 
     await operationComponentsPage.clickOnCreateButton();
+
     await promise.all([
       operationUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       operationUpdatePage.setDescriptionInput('description'),
       operationUpdatePage.setAmountInput('5'),
-      operationUpdatePage.bankAccountSelectLastOption()
+      operationUpdatePage.bankAccountSelectLastOption(),
       // operationUpdatePage.labelSelectLastOption(),
     ]);
+
     expect(await operationUpdatePage.getDateInput()).to.contain('2001-01-01T02:30', 'Expected date value to be equals to 2000-12-31');
     expect(await operationUpdatePage.getDescriptionInput()).to.eq('description', 'Expected Description value to be equals to description');
     expect(await operationUpdatePage.getAmountInput()).to.eq('5', 'Expected amount value to be equals to 5');
+
     await operationUpdatePage.save();
     expect(await operationUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 

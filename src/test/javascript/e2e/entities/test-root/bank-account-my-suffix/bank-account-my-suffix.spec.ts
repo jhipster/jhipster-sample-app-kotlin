@@ -1,8 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { browser, ExpectedConditions as ec, protractor, promise } from 'protractor';
 import { NavBarPage, SignInPage } from '../../../page-objects/jhi-page-objects';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { BankAccountComponentsPage, BankAccountDeleteDialog, BankAccountUpdatePage } from './bank-account-my-suffix.page-object';
 import * as path from 'path';
 
@@ -11,8 +9,8 @@ const expect = chai.expect;
 describe('BankAccount e2e test', () => {
   let navBarPage: NavBarPage;
   let signInPage: SignInPage;
-  let bankAccountUpdatePage: BankAccountUpdatePage;
   let bankAccountComponentsPage: BankAccountComponentsPage;
+  let bankAccountUpdatePage: BankAccountUpdatePage;
   let bankAccountDeleteDialog: BankAccountDeleteDialog;
   const fileNameToUpload = 'logo-jhipster.png';
   const fileToUpload = '../../../../../../../src/main/webapp/content/images/' + fileNameToUpload;
@@ -31,6 +29,10 @@ describe('BankAccount e2e test', () => {
     bankAccountComponentsPage = new BankAccountComponentsPage();
     await browser.wait(ec.visibilityOf(bankAccountComponentsPage.title), 5000);
     expect(await bankAccountComponentsPage.getTitle()).to.eq('jhipsterApp.testRootBankAccount.home.title');
+    await browser.wait(
+      ec.or(ec.visibilityOf(bankAccountComponentsPage.entities), ec.visibilityOf(bankAccountComponentsPage.noResult)),
+      1000
+    );
   });
 
   it('should load create BankAccount page', async () => {
@@ -44,6 +46,7 @@ describe('BankAccount e2e test', () => {
     const nbButtonsBeforeCreate = await bankAccountComponentsPage.countDeleteButtons();
 
     await bankAccountComponentsPage.clickOnCreateButton();
+
     await promise.all([
       bankAccountUpdatePage.setNameInput('name'),
       bankAccountUpdatePage.setBankNumberInput('5'),
@@ -56,8 +59,9 @@ describe('BankAccount e2e test', () => {
       bankAccountUpdatePage.accountTypeSelectLastOption(),
       bankAccountUpdatePage.setAttachmentInput(absolutePath),
       bankAccountUpdatePage.setDescriptionInput('description'),
-      bankAccountUpdatePage.userSelectLastOption()
+      bankAccountUpdatePage.userSelectLastOption(),
     ]);
+
     expect(await bankAccountUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
     expect(await bankAccountUpdatePage.getBankNumberInput()).to.eq('5', 'Expected bankNumber value to be equals to 5');
     expect(await bankAccountUpdatePage.getAgencyNumberInput()).to.eq('5', 'Expected agencyNumber value to be equals to 5');
@@ -91,6 +95,7 @@ describe('BankAccount e2e test', () => {
       'description',
       'Expected Description value to be equals to description'
     );
+
     await bankAccountUpdatePage.save();
     expect(await bankAccountUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 

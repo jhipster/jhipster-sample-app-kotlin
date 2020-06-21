@@ -1,77 +1,80 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="bankAccount">
-            <h2><span jhiTranslate="jhipsterApp.testRootBankAccount.detail.title">Bank Account</span> {{bankAccount.id}}</h2>
+            <h2><span jhiTranslate="jhipsterApp.testRootBankAccount.detail.title">Bank Account</span> {{ bankAccount.id }}</h2>
+
             <hr>
+
             <jhi-alert-error></jhi-alert-error>
+
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="jhipsterApp.testRootBankAccount.name">Name</span></dt>
                 <dd>
-                    <span>{{bankAccount.name}}</span>
+                    <span>{{ bankAccount.name }}</span>
                 </dd>
                 <dt><span jhiTranslate="jhipsterApp.testRootBankAccount.bankNumber">Bank Number</span></dt>
                 <dd>
-                    <span>{{bankAccount.bankNumber}}</span>
+                    <span>{{ bankAccount.bankNumber }}</span>
                 </dd>
                 <dt><span jhiTranslate="jhipsterApp.testRootBankAccount.agencyNumber">Agency Number</span></dt>
                 <dd>
-                    <span>{{bankAccount.agencyNumber}}</span>
+                    <span>{{ bankAccount.agencyNumber }}</span>
                 </dd>
                 <dt><span jhiTranslate="jhipsterApp.testRootBankAccount.lastOperationDuration">Last Operation Duration</span></dt>
                 <dd>
-                    <span>{{bankAccount.lastOperationDuration}}</span>
+                    <span>{{ bankAccount.lastOperationDuration }}</span>
                 </dd>
                 <dt><span jhiTranslate="jhipsterApp.testRootBankAccount.meanOperationDuration">Mean Operation Duration</span></dt>
                 <dd>
-                    <span>{{bankAccount.meanOperationDuration}}</span>
+                    <span>{{ bankAccount.meanOperationDuration }}</span>
                 </dd>
                 <dt><span jhiTranslate="jhipsterApp.testRootBankAccount.balance">Balance</span></dt>
                 <dd>
-                    <span>{{bankAccount.balance}}</span>
+                    <span>{{ bankAccount.balance }}</span>
                 </dd>
                 <dt><span jhiTranslate="jhipsterApp.testRootBankAccount.openingDay">Opening Day</span></dt>
                 <dd>
-                    <span>{{bankAccount.openingDay}}</span>
+                    <span>{{ bankAccount.openingDay }}</span>
                 </dd>
                 <dt><span jhiTranslate="jhipsterApp.testRootBankAccount.lastOperationDate">Last Operation Date</span></dt>
                 <dd>
-                    <span>{{bankAccount.lastOperationDate}}</span>
+                    <span>{{ bankAccount.lastOperationDate }}</span>
                 </dd>
                 <dt><span jhiTranslate="jhipsterApp.testRootBankAccount.active">Active</span></dt>
                 <dd>
-                    <span>{{bankAccount.active}}</span>
+                    <span>{{ bankAccount.active }}</span>
                 </dd>
                 <dt><span jhiTranslate="jhipsterApp.testRootBankAccount.accountType">Account Type</span></dt>
                 <dd>
-                    <span jhiTranslate="{{'jhipsterApp.BankAccountType.' + bankAccount.accountType}}">{{bankAccount.accountType}}</span>
+                    <span jhiTranslate="{{ 'jhipsterApp.BankAccountType.' + bankAccount.accountType }}">{{ bankAccount.accountType }}</span>
                 </dd>
                 <dt><span jhiTranslate="jhipsterApp.testRootBankAccount.attachment">Attachment</span></dt>
                 <dd>
                     <div *ngIf="bankAccount.attachment">
                         <a (click)="openFile(bankAccount.attachmentContentType, bankAccount.attachment)" jhiTranslate="entity.action.open">open</a>
-                        {{bankAccount.attachmentContentType}}, {{byteSize(bankAccount.attachment)}}
+                        {{ bankAccount.attachmentContentType }}, {{ byteSize(bankAccount.attachment) }}
                     </div>
                 </dd>
                 <dt><span jhiTranslate="jhipsterApp.testRootBankAccount.description">Description</span></dt>
                 <dd>
-                    <span>{{bankAccount.description}}</span>
+                    <span>{{ bankAccount.description }}</span>
                 </dd>
                 <dt><span jhiTranslate="jhipsterApp.testRootBankAccount.user">User</span></dt>
                 <dd>
-                    {{bankAccount.userLogin}}
+                    {{ bankAccount.userLogin }}
                 </dd>
             </dl>
 
             <button type="submit"
                     (click)="previousState()"
                     class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
             </button>
 
             <button type="button"
                     [routerLink]="['/bank-account-my-suffix', bankAccount.id, 'edit']"
                     class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
             </button>
         </div>
     </div>

@@ -1,20 +1,28 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { SpyObject } from './spyobject';
-import { Observable, of } from 'rxjs';
 import Spy = jasmine.Spy;
+import { ActivatedRoute, Router, RouterEvent, Data, Params } from '@angular/router';
+import { Observable, ReplaySubject } from 'rxjs';
+
+import { SpyObject } from './spyobject';
 
 export class MockActivatedRoute extends ActivatedRoute {
-  constructor(parameters?: any) {
+  private queryParamsSubject = new ReplaySubject<Params>();
+  private paramSubject = new ReplaySubject<Params>();
+  private dataSubject = new ReplaySubject<Data>();
+
+  constructor(parameters: Params) {
     super();
-    this.queryParams = of(parameters);
-    this.params = of(parameters);
-    this.data = of({
+    this.queryParams = this.queryParamsSubject.asObservable();
+    this.params = this.paramSubject.asObservable();
+    this.data = this.dataSubject.asObservable();
+    this.setParameters(parameters);
+  }
+
+  setParameters(parameters: Params): void {
+    this.queryParamsSubject.next(parameters);
+    this.paramSubject.next(parameters);
+    this.dataSubject.next({
       ...parameters,
-      pagingParams: {
-        page: 10,
-        ascending: false,
-        predicate: 'id'
-      }
+      defaultSort: 'id,desc',
     });
   }
 }
@@ -22,7 +30,9 @@ export class MockActivatedRoute extends ActivatedRoute {
 export class MockRouter extends SpyObject {
   navigateSpy: Spy;
   navigateByUrlSpy: Spy;
-  events: Observable<any>;
+  events: Observable<RouterEvent> | null = null;
+  routerState: any;
+  url = '';
 
   constructor() {
     super(Router);
@@ -30,7 +40,11 @@ export class MockRouter extends SpyObject {
     this.navigateByUrlSpy = this.spy('navigateByUrl');
   }
 
-  setRouterEvent(event: any) {
-    this.events = of(event);
+  setEvents(events: Observable<RouterEvent>): void {
+    this.events = events;
+  }
+
+  setRouterState(routerState: any): void {
+    this.routerState = routerState;
   }
 }

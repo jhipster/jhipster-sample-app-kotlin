@@ -1,6 +1,5 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { take, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_FORMAT, DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { BankAccountMySuffixService } from 'app/entities/test-root/bank-account-my-suffix/bank-account-my-suffix.service';
@@ -13,13 +12,14 @@ describe('Service Tests', () => {
     let service: BankAccountMySuffixService;
     let httpMock: HttpTestingController;
     let elemDefault: IBankAccountMySuffix;
-    let expectedResult;
+    let expectedResult: IBankAccountMySuffix | IBankAccountMySuffix[] | boolean | null;
     let currentDate: moment.Moment;
+
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule]
+        imports: [HttpClientTestingModule],
       });
-      expectedResult = {};
+      expectedResult = null;
       injector = getTestBed();
       service = injector.get(BankAccountMySuffixService);
       httpMock = injector.get(HttpTestingController);
@@ -48,18 +48,16 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             openingDay: currentDate.format(DATE_FORMAT),
-            lastOperationDate: currentDate.format(DATE_TIME_FORMAT)
+            lastOperationDate: currentDate.format(DATE_TIME_FORMAT),
           },
           elemDefault
         );
-        service
-          .find(123)
-          .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+
+        service.find(123).subscribe(resp => (expectedResult = resp.body));
 
         const req = httpMock.expectOne({ method: 'GET' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: elemDefault });
+        expect(expectedResult).toMatchObject(elemDefault);
       });
 
       it('should create a BankAccountMySuffix', () => {
@@ -67,24 +65,24 @@ describe('Service Tests', () => {
           {
             id: 0,
             openingDay: currentDate.format(DATE_FORMAT),
-            lastOperationDate: currentDate.format(DATE_TIME_FORMAT)
+            lastOperationDate: currentDate.format(DATE_TIME_FORMAT),
           },
           elemDefault
         );
+
         const expected = Object.assign(
           {
             openingDay: currentDate,
-            lastOperationDate: currentDate
+            lastOperationDate: currentDate,
           },
           returnedFromService
         );
-        service
-          .create(new BankAccountMySuffix(null))
-          .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+
+        service.create(new BankAccountMySuffix()).subscribe(resp => (expectedResult = resp.body));
+
         const req = httpMock.expectOne({ method: 'POST' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: expected });
+        expect(expectedResult).toMatchObject(expected);
       });
 
       it('should update a BankAccountMySuffix', () => {
@@ -101,7 +99,7 @@ describe('Service Tests', () => {
             active: true,
             accountType: 'BBBBBB',
             attachment: 'BBBBBB',
-            description: 'BBBBBB'
+            description: 'BBBBBB',
           },
           elemDefault
         );
@@ -109,17 +107,16 @@ describe('Service Tests', () => {
         const expected = Object.assign(
           {
             openingDay: currentDate,
-            lastOperationDate: currentDate
+            lastOperationDate: currentDate,
           },
           returnedFromService
         );
-        service
-          .update(expected)
-          .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+
+        service.update(expected).subscribe(resp => (expectedResult = resp.body));
+
         const req = httpMock.expectOne({ method: 'PUT' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: expected });
+        expect(expectedResult).toMatchObject(expected);
       });
 
       it('should return a list of BankAccountMySuffix', () => {
@@ -136,24 +133,21 @@ describe('Service Tests', () => {
             active: true,
             accountType: 'BBBBBB',
             attachment: 'BBBBBB',
-            description: 'BBBBBB'
+            description: 'BBBBBB',
           },
           elemDefault
         );
+
         const expected = Object.assign(
           {
             openingDay: currentDate,
-            lastOperationDate: currentDate
+            lastOperationDate: currentDate,
           },
           returnedFromService
         );
-        service
-          .query(expected)
-          .pipe(
-            take(1),
-            map(resp => resp.body)
-          )
-          .subscribe(body => (expectedResult = body));
+
+        service.query().subscribe(resp => (expectedResult = resp.body));
+
         const req = httpMock.expectOne({ method: 'GET' });
         req.flush([returnedFromService]);
         httpMock.verify();

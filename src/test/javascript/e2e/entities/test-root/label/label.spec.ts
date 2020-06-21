@@ -1,8 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { browser, ExpectedConditions as ec, promise } from 'protractor';
 import { NavBarPage, SignInPage } from '../../../page-objects/jhi-page-objects';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { LabelComponentsPage, LabelDeleteDialog, LabelUpdatePage } from './label.page-object';
 
 const expect = chai.expect;
@@ -10,8 +8,8 @@ const expect = chai.expect;
 describe('Label e2e test', () => {
   let navBarPage: NavBarPage;
   let signInPage: SignInPage;
-  let labelUpdatePage: LabelUpdatePage;
   let labelComponentsPage: LabelComponentsPage;
+  let labelUpdatePage: LabelUpdatePage;
   let labelDeleteDialog: LabelDeleteDialog;
 
   before(async () => {
@@ -27,6 +25,7 @@ describe('Label e2e test', () => {
     labelComponentsPage = new LabelComponentsPage();
     await browser.wait(ec.visibilityOf(labelComponentsPage.title), 5000);
     expect(await labelComponentsPage.getTitle()).to.eq('jhipsterApp.testRootLabel.home.title');
+    await browser.wait(ec.or(ec.visibilityOf(labelComponentsPage.entities), ec.visibilityOf(labelComponentsPage.noResult)), 1000);
   });
 
   it('should load create Label page', async () => {
@@ -40,8 +39,11 @@ describe('Label e2e test', () => {
     const nbButtonsBeforeCreate = await labelComponentsPage.countDeleteButtons();
 
     await labelComponentsPage.clickOnCreateButton();
+
     await promise.all([labelUpdatePage.setLabelNameInput('labelName')]);
+
     expect(await labelUpdatePage.getLabelNameInput()).to.eq('labelName', 'Expected LabelName value to be equals to labelName');
+
     await labelUpdatePage.save();
     expect(await labelUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 

@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { JhiAlertService } from 'ng-jhipster';
+
 import { IOperation, Operation } from 'app/shared/model/test-root/operation.model';
 import { OperationService } from './operation.service';
 import { IBankAccountMySuffix } from 'app/shared/model/test-root/bank-account-my-suffix.model';
@@ -16,16 +14,16 @@ import { BankAccountMySuffixService } from 'app/entities/test-root/bank-account-
 import { ILabel } from 'app/shared/model/test-root/label.model';
 import { LabelService } from 'app/entities/test-root/label/label.service';
 
+type SelectableEntity = IBankAccountMySuffix | ILabel;
+
 @Component({
   selector: 'jhi-operation-update',
-  templateUrl: './operation-update.component.html'
+  templateUrl: './operation-update.component.html',
 })
 export class OperationUpdateComponent implements OnInit {
-  isSaving: boolean;
-
-  bankaccounts: IBankAccountMySuffix[];
-
-  labels: ILabel[];
+  isSaving = false;
+  bankaccounts: IBankAccountMySuffix[] = [];
+  labels: ILabel[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -33,11 +31,10 @@ export class OperationUpdateComponent implements OnInit {
     description: [],
     amount: [null, [Validators.required]],
     bankAccount: [],
-    labels: []
+    labels: [],
   });
 
   constructor(
-    protected jhiAlertService: JhiAlertService,
     protected operationService: OperationService,
     protected bankAccountService: BankAccountMySuffixService,
     protected labelService: LabelService,
@@ -45,43 +42,37 @@ export class OperationUpdateComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.isSaving = false;
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ operation }) => {
+      if (!operation.id) {
+        const today = moment().startOf('day');
+        operation.date = today;
+      }
+
       this.updateForm(operation);
+
+      this.bankAccountService.query().subscribe((res: HttpResponse<IBankAccountMySuffix[]>) => (this.bankaccounts = res.body || []));
+
+      this.labelService.query().subscribe((res: HttpResponse<ILabel[]>) => (this.labels = res.body || []));
     });
-    this.bankAccountService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IBankAccountMySuffix[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IBankAccountMySuffix[]>) => response.body)
-      )
-      .subscribe((res: IBankAccountMySuffix[]) => (this.bankaccounts = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.labelService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<ILabel[]>) => mayBeOk.ok),
-        map((response: HttpResponse<ILabel[]>) => response.body)
-      )
-      .subscribe((res: ILabel[]) => (this.labels = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  updateForm(operation: IOperation) {
+  updateForm(operation: IOperation): void {
     this.editForm.patchValue({
       id: operation.id,
-      date: operation.date != null ? operation.date.format(DATE_TIME_FORMAT) : null,
+      date: operation.date ? operation.date.format(DATE_TIME_FORMAT) : null,
       description: operation.description,
       amount: operation.amount,
       bankAccount: operation.bankAccount,
-      labels: operation.labels
+      labels: operation.labels,
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const operation = this.createFromForm();
     if (operation.id !== undefined) {
@@ -94,40 +85,36 @@ export class OperationUpdateComponent implements OnInit {
   private createFromForm(): IOperation {
     return {
       ...new Operation(),
-      id: this.editForm.get(['id']).value,
-      date: this.editForm.get(['date']).value != null ? moment(this.editForm.get(['date']).value, DATE_TIME_FORMAT) : undefined,
-      description: this.editForm.get(['description']).value,
-      amount: this.editForm.get(['amount']).value,
-      bankAccount: this.editForm.get(['bankAccount']).value,
-      labels: this.editForm.get(['labels']).value
+      id: this.editForm.get(['id'])!.value,
+      date: this.editForm.get(['date'])!.value ? moment(this.editForm.get(['date'])!.value, DATE_TIME_FORMAT) : undefined,
+      description: this.editForm.get(['description'])!.value,
+      amount: this.editForm.get(['amount'])!.value,
+      bankAccount: this.editForm.get(['bankAccount'])!.value,
+      labels: this.editForm.get(['labels'])!.value,
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IOperation>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IOperation>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError() {
+  protected onSaveError(): void {
     this.isSaving = false;
   }
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
 
-  trackBankAccountById(index: number, item: IBankAccountMySuffix) {
+  trackById(index: number, item: SelectableEntity): any {
     return item.id;
   }
 
-  trackLabelById(index: number, item: ILabel) {
-    return item.id;
-  }
-
-  getSelected(selectedVals: any[], option: any) {
+  getSelected(selectedVals: ILabel[], option: ILabel): ILabel {
     if (selectedVals) {
       for (let i = 0; i < selectedVals.length; i++) {
         if (option.id === selectedVals[i].id) {

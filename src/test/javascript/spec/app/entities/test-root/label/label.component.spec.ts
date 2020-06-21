@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { ActivatedRoute, Data } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 import { JhipsterTestModule } from '../../../../test.module';
 import { LabelComponent } from 'app/entities/test-root/label/label.component';
@@ -22,19 +22,19 @@ describe('Component Tests', () => {
           {
             provide: ActivatedRoute,
             useValue: {
-              data: {
-                subscribe: (fn: (value: Data) => void) =>
-                  fn({
-                    pagingParams: {
-                      predicate: 'id',
-                      reverse: false,
-                      page: 0
-                    }
-                  })
-              }
-            }
-          }
-        ]
+              data: of({
+                defaultSort: 'id,asc',
+              }),
+              queryParamMap: of(
+                convertToParamMap({
+                  page: '1',
+                  size: '1',
+                  sort: 'id,desc',
+                })
+              ),
+            },
+          },
+        ],
       })
         .overrideTemplate(LabelComponent, '')
         .compileComponents();
@@ -51,7 +51,7 @@ describe('Component Tests', () => {
         of(
           new HttpResponse({
             body: [new Label(123)],
-            headers
+            headers,
           })
         )
       );
@@ -61,7 +61,7 @@ describe('Component Tests', () => {
 
       // THEN
       expect(service.query).toHaveBeenCalled();
-      expect(comp.labels[0]).toEqual(jasmine.objectContaining({ id: 123 }));
+      expect(comp.labels && comp.labels[0]).toEqual(jasmine.objectContaining({ id: 123 }));
     });
 
     it('should load a page', () => {
@@ -71,7 +71,7 @@ describe('Component Tests', () => {
         of(
           new HttpResponse({
             body: [new Label(123)],
-            headers
+            headers,
           })
         )
       );
@@ -81,42 +81,12 @@ describe('Component Tests', () => {
 
       // THEN
       expect(service.query).toHaveBeenCalled();
-      expect(comp.labels[0]).toEqual(jasmine.objectContaining({ id: 123 }));
+      expect(comp.labels && comp.labels[0]).toEqual(jasmine.objectContaining({ id: 123 }));
     });
 
-    it('should not load a page is the page is the same as the previous page', () => {
-      spyOn(service, 'query').and.callThrough();
-
-      // WHEN
-      comp.loadPage(0);
-
-      // THEN
-      expect(service.query).toHaveBeenCalledTimes(0);
-    });
-
-    it('should re-initialize the page', () => {
-      // GIVEN
-      const headers = new HttpHeaders().append('link', 'link;link');
-      spyOn(service, 'query').and.returnValue(
-        of(
-          new HttpResponse({
-            body: [new Label(123)],
-            headers
-          })
-        )
-      );
-
-      // WHEN
-      comp.loadPage(1);
-      comp.clear();
-
-      // THEN
-      expect(comp.page).toEqual(0);
-      expect(service.query).toHaveBeenCalledTimes(2);
-      expect(comp.labels[0]).toEqual(jasmine.objectContaining({ id: 123 }));
-    });
     it('should calculate the sort attribute for an id', () => {
       // WHEN
+      comp.ngOnInit();
       const result = comp.sort();
 
       // THEN
@@ -124,6 +94,9 @@ describe('Component Tests', () => {
     });
 
     it('should calculate the sort attribute for a non-id attribute', () => {
+      // INIT
+      comp.ngOnInit();
+
       // GIVEN
       comp.predicate = 'name';
 

@@ -1,29 +1,29 @@
 import { ComponentFixture, TestBed, async, inject, fakeAsync, tick } from '@angular/core/testing';
-import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { of } from 'rxjs';
 
 import { JhipsterTestModule } from '../../../test.module';
-import { UserMgmtComponent } from 'app/admin/user-management/user-management.component';
+import { UserManagementComponent } from 'app/admin/user-management/user-management.component';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.model';
 
 describe('Component Tests', () => {
   describe('User Management Component', () => {
-    let comp: UserMgmtComponent;
-    let fixture: ComponentFixture<UserMgmtComponent>;
+    let comp: UserManagementComponent;
+    let fixture: ComponentFixture<UserManagementComponent>;
     let service: UserService;
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [JhipsterTestModule],
-        declarations: [UserMgmtComponent]
+        declarations: [UserManagementComponent],
       })
-        .overrideTemplate(UserMgmtComponent, '')
+        .overrideTemplate(UserManagementComponent, '')
         .compileComponents();
     }));
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(UserMgmtComponent);
+      fixture = TestBed.createComponent(UserManagementComponent);
       comp = fixture.componentInstance;
       service = fixture.debugElement.injector.get(UserService);
     });
@@ -38,7 +38,7 @@ describe('Component Tests', () => {
             of(
               new HttpResponse({
                 body: [new User(123)],
-                headers
+                headers,
               })
             )
           );
@@ -49,7 +49,7 @@ describe('Component Tests', () => {
 
           // THEN
           expect(service.query).toHaveBeenCalled();
-          expect(comp.users[0]).toEqual(jasmine.objectContaining({ id: 123 }));
+          expect(comp.users && comp.users[0]).toEqual(jasmine.objectContaining({ id: 123 }));
         })
       ));
     });
@@ -65,7 +65,7 @@ describe('Component Tests', () => {
             of(
               new HttpResponse({
                 body: [user],
-                headers
+                headers,
               })
             )
           );
@@ -76,9 +76,9 @@ describe('Component Tests', () => {
           tick(); // simulate async
 
           // THEN
-          expect(service.update).toHaveBeenCalledWith(user);
+          expect(service.update).toHaveBeenCalledWith({ ...user, activated: true });
           expect(service.query).toHaveBeenCalled();
-          expect(comp.users[0]).toEqual(jasmine.objectContaining({ id: 123 }));
+          expect(comp.users && comp.users[0]).toEqual(jasmine.objectContaining({ id: 123 }));
         })
       ));
     });

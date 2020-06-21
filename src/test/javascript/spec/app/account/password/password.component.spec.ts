@@ -17,7 +17,7 @@ describe('Component Tests', () => {
       TestBed.configureTestingModule({
         imports: [JhipsterTestModule],
         declarations: [PasswordComponent],
-        providers: [FormBuilder]
+        providers: [FormBuilder],
       })
         .overrideTemplate(PasswordComponent, '')
         .compileComponents();
@@ -33,21 +33,21 @@ describe('Component Tests', () => {
       // GIVEN
       comp.passwordForm.patchValue({
         newPassword: 'password1',
-        confirmPassword: 'password2'
+        confirmPassword: 'password2',
       });
       // WHEN
       comp.changePassword();
       // THEN
-      expect(comp.doNotMatch).toBe('ERROR');
-      expect(comp.error).toBeNull();
-      expect(comp.success).toBeNull();
+      expect(comp.doNotMatch).toBe(true);
+      expect(comp.error).toBe(false);
+      expect(comp.success).toBe(false);
     });
 
     it('should call Auth.changePassword when passwords match', () => {
       // GIVEN
       const passwordValues = {
         currentPassword: 'oldPassword',
-        newPassword: 'myPassword'
+        newPassword: 'myPassword',
       };
 
       spyOn(service, 'save').and.returnValue(of(new HttpResponse({ body: true })));
@@ -55,7 +55,7 @@ describe('Component Tests', () => {
       comp.passwordForm.patchValue({
         currentPassword: passwordValues.currentPassword,
         newPassword: passwordValues.newPassword,
-        confirmPassword: passwordValues.newPassword
+        confirmPassword: passwordValues.newPassword,
       });
 
       // WHEN
@@ -65,38 +65,38 @@ describe('Component Tests', () => {
       expect(service.save).toHaveBeenCalledWith(passwordValues.newPassword, passwordValues.currentPassword);
     });
 
-    it('should set success to OK upon success', function() {
+    it('should set success to true upon success', () => {
       // GIVEN
       spyOn(service, 'save').and.returnValue(of(new HttpResponse({ body: true })));
       comp.passwordForm.patchValue({
         newPassword: 'myPassword',
-        confirmPassword: 'myPassword'
+        confirmPassword: 'myPassword',
       });
 
       // WHEN
       comp.changePassword();
 
       // THEN
-      expect(comp.doNotMatch).toBeNull();
-      expect(comp.error).toBeNull();
-      expect(comp.success).toBe('OK');
+      expect(comp.doNotMatch).toBe(false);
+      expect(comp.error).toBe(false);
+      expect(comp.success).toBe(true);
     });
 
-    it('should notify of error if change password fails', function() {
+    it('should notify of error if change password fails', () => {
       // GIVEN
       spyOn(service, 'save').and.returnValue(throwError('ERROR'));
       comp.passwordForm.patchValue({
         newPassword: 'myPassword',
-        confirmPassword: 'myPassword'
+        confirmPassword: 'myPassword',
       });
 
       // WHEN
       comp.changePassword();
 
       // THEN
-      expect(comp.doNotMatch).toBeNull();
-      expect(comp.success).toBeNull();
-      expect(comp.error).toBe('ERROR');
+      expect(comp.doNotMatch).toBe(false);
+      expect(comp.success).toBe(false);
+      expect(comp.error).toBe(true);
     });
   });
 });

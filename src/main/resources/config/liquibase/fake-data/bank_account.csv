@@ -1,11 +1,11 @@
 id;name;bank_number;agency_number;last_operation_duration;mean_operation_duration;balance;opening_day;last_operation_date;active;account_type;attachment;attachment_content_type;description
-1;mobile Fish;77969;59865;59685;15601;44583;2019-09-20;2019-09-20T10:43:29;false;CHECKING;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
-2;deposit Tasty Metal Bacon Implementation;77;18182;99221;18340;61748;2019-09-20;2019-09-19T22:26:41;true;LOAN;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
-3;Namibia;39986;13949;4666;29214;97375;2019-09-20;2019-09-20T07:32:16;false;LOAN;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
-4;syndicate;98323;59241;46676;4645;85994;2019-09-19;2019-09-19T20:47:49;false;CHECKING;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
-5;envisioneer Music Public-key;24102;44015;68326;12203;60999;2019-09-20;2019-09-19T17:07:40;false;LOAN;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
-6;Tuna;75536;31171;42515;52006;20794;2019-09-20;2019-09-19T23:29:58;false;SAVINGS;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
-7;Views e-enable Communications;72727;92187;32654;8849;57044;2019-09-20;2019-09-20T00:37:27;false;SAVINGS;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
-8;Louisiana Specialist Home Loan Account;27599;14092;29627;80219;16526;2019-09-20;2019-09-20T12:44:56;true;SAVINGS;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
-9;Jewelery;19884;70685;71134;72900;79017;2019-09-19;2019-09-19T22:34:52;false;CHECKING;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
-10;Highway Ergonomic;37081;31098;66884;32518;66592;2019-09-19;2019-09-19T22:55:59;true;LOAN;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
+1;monitor;47917;17676;4944;85342;56;2015-08-05;2015-08-05T03:15:07;false;LOAN;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
+2;Steel bypass;38227;22265;5554;29169;61296;2015-08-04;2015-08-05T01:53:13;false;CHECKING;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
+3;Planner Savings Account;4492;23597;37315;35179;58341;2015-08-04;2015-08-05T11:40:02;false;LOAN;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
+4;distributed North Korean Won Lebanese Pound;78428;49426;16567;64012;50180;2015-08-04;2015-08-05T04:54:32;true;SAVINGS;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
+5;Fresh;4327;21080;3173;20551;34696;2015-08-04;2015-08-05T03:09:22;false;SAVINGS;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
+6;Malaysia;60774;94980;800;57751;93593;2015-08-05;2015-08-05T09:09:44;false;SAVINGS;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
+7;paradigms feed;93839;4905;17093;46969;29667;2015-08-04;2015-08-04T20:59:54;true;SAVINGS;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
+8;Usability Generic;2787;94272;47143;87380;37246;2015-08-04;2015-08-04T14:26:09;false;LOAN;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
+9;navigate;46867;78035;40962;59377;63670;2015-08-05;2015-08-05T12:09:04;true;LOAN;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt
+10;communities Industrial functionalities;55168;18898;31612;74611;11956;2015-08-04;2015-08-05T06:59:29;true;SAVINGS;../fake-data/blob/hipster.png;image/png;../fake-data/blob/hipster.txt

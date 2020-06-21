@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
+import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IBankAccountMySuffix } from 'app/shared/model/test-root/bank-account-my-suffix.model';
@@ -46,23 +45,23 @@ export class BankAccountMySuffixService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  delete(id: number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(bankAccount: IBankAccountMySuffix): IBankAccountMySuffix {
     const copy: IBankAccountMySuffix = Object.assign({}, bankAccount, {
-      openingDay: bankAccount.openingDay != null && bankAccount.openingDay.isValid() ? bankAccount.openingDay.format(DATE_FORMAT) : null,
+      openingDay: bankAccount.openingDay && bankAccount.openingDay.isValid() ? bankAccount.openingDay.format(DATE_FORMAT) : undefined,
       lastOperationDate:
-        bankAccount.lastOperationDate != null && bankAccount.lastOperationDate.isValid() ? bankAccount.lastOperationDate.toJSON() : null
+        bankAccount.lastOperationDate && bankAccount.lastOperationDate.isValid() ? bankAccount.lastOperationDate.toJSON() : undefined,
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.openingDay = res.body.openingDay != null ? moment(res.body.openingDay) : null;
-      res.body.lastOperationDate = res.body.lastOperationDate != null ? moment(res.body.lastOperationDate) : null;
+      res.body.openingDay = res.body.openingDay ? moment(res.body.openingDay) : undefined;
+      res.body.lastOperationDate = res.body.lastOperationDate ? moment(res.body.lastOperationDate) : undefined;
     }
     return res;
   }
@@ -70,8 +69,8 @@ export class BankAccountMySuffixService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((bankAccount: IBankAccountMySuffix) => {
-        bankAccount.openingDay = bankAccount.openingDay != null ? moment(bankAccount.openingDay) : null;
-        bankAccount.lastOperationDate = bankAccount.lastOperationDate != null ? moment(bankAccount.lastOperationDate) : null;
+        bankAccount.openingDay = bankAccount.openingDay ? moment(bankAccount.openingDay) : undefined;
+        bankAccount.lastOperationDate = bankAccount.lastOperationDate ? moment(bankAccount.lastOperationDate) : undefined;
       });
     }
     return res;

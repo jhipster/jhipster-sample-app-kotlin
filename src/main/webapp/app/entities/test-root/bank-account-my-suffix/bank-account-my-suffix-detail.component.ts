@@ -6,27 +6,26 @@ import { IBankAccountMySuffix } from 'app/shared/model/test-root/bank-account-my
 
 @Component({
   selector: 'jhi-bank-account-my-suffix-detail',
-  templateUrl: './bank-account-my-suffix-detail.component.html'
+  templateUrl: './bank-account-my-suffix-detail.component.html',
 })
 export class BankAccountMySuffixDetailComponent implements OnInit {
-  bankAccount: IBankAccountMySuffix;
+  bankAccount: IBankAccountMySuffix | null = null;
 
   constructor(protected dataUtils: JhiDataUtils, protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ bankAccount }) => {
-      this.bankAccount = bankAccount;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ bankAccount }) => (this.bankAccount = bankAccount));
   }
 
-  byteSize(field) {
-    return this.dataUtils.byteSize(field);
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
   }
 
-  openFile(contentType, field) {
-    return this.dataUtils.openFile(contentType, field);
+  openFile(contentType = '', base64String: string): void {
+    this.dataUtils.openFile(contentType, base64String);
   }
-  previousState() {
+
+  previousState(): void {
     window.history.back();
   }
 }

@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed, async, inject, tick, fakeAsync } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { of, throwError } from 'rxjs';
-
 import { JhiLanguageService } from 'ng-jhipster';
+
 import { MockLanguageService } from '../../../helpers/mock-language.service';
 import { JhipsterTestModule } from '../../../test.module';
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/shared/constants/error.constants';
-import { Register } from 'app/account/register/register.service';
+import { RegisterService } from 'app/account/register/register.service';
 import { RegisterComponent } from 'app/account/register/register.component';
 
 describe('Component Tests', () => {
@@ -18,7 +18,7 @@ describe('Component Tests', () => {
       TestBed.configureTestingModule({
         imports: [JhipsterTestModule],
         declarations: [RegisterComponent],
-        providers: [FormBuilder]
+        providers: [FormBuilder],
       })
         .overrideTemplate(RegisterComponent, '')
         .compileComponents();
@@ -27,27 +27,26 @@ describe('Component Tests', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(RegisterComponent);
       comp = fixture.componentInstance;
-      comp.ngOnInit();
     });
 
     it('should ensure the two passwords entered match', () => {
       comp.registerForm.patchValue({
         password: 'password',
-        confirmPassword: 'non-matching'
+        confirmPassword: 'non-matching',
       });
 
       comp.register();
 
-      expect(comp.doNotMatch).toEqual('ERROR');
+      expect(comp.doNotMatch).toBe(true);
     });
 
-    it('should update success to OK after creating an account', inject(
-      [Register, JhiLanguageService],
-      fakeAsync((service: Register, mockTranslate: MockLanguageService) => {
+    it('should update success to true after creating an account', inject(
+      [RegisterService, JhiLanguageService],
+      fakeAsync((service: RegisterService, mockTranslate: MockLanguageService) => {
         spyOn(service, 'save').and.returnValue(of({}));
         comp.registerForm.patchValue({
           password: 'password',
-          confirmPassword: 'password'
+          confirmPassword: 'password',
         });
 
         comp.register();
@@ -57,81 +56,81 @@ describe('Component Tests', () => {
           email: '',
           password: 'password',
           login: '',
-          langKey: 'en'
+          langKey: 'en',
         });
-        expect(comp.success).toEqual(true);
-        expect(mockTranslate.getCurrentSpy).toHaveBeenCalled();
-        expect(comp.errorUserExists).toBeNull();
-        expect(comp.errorEmailExists).toBeNull();
-        expect(comp.error).toBeNull();
+        expect(comp.success).toBe(true);
+        expect(mockTranslate.getCurrentLanguageSpy).toHaveBeenCalled();
+        expect(comp.errorUserExists).toBe(false);
+        expect(comp.errorEmailExists).toBe(false);
+        expect(comp.error).toBe(false);
       })
     ));
 
     it('should notify of user existence upon 400/login already in use', inject(
-      [Register],
-      fakeAsync((service: Register) => {
+      [RegisterService],
+      fakeAsync((service: RegisterService) => {
         spyOn(service, 'save').and.returnValue(
           throwError({
             status: 400,
-            error: { type: LOGIN_ALREADY_USED_TYPE }
+            error: { type: LOGIN_ALREADY_USED_TYPE },
           })
         );
         comp.registerForm.patchValue({
           password: 'password',
-          confirmPassword: 'password'
+          confirmPassword: 'password',
         });
 
         comp.register();
         tick();
 
-        expect(comp.errorUserExists).toEqual('ERROR');
-        expect(comp.errorEmailExists).toBeNull();
-        expect(comp.error).toBeNull();
+        expect(comp.errorUserExists).toBe(true);
+        expect(comp.errorEmailExists).toBe(false);
+        expect(comp.error).toBe(false);
       })
     ));
 
     it('should notify of email existence upon 400/email address already in use', inject(
-      [Register],
-      fakeAsync((service: Register) => {
+      [RegisterService],
+      fakeAsync((service: RegisterService) => {
         spyOn(service, 'save').and.returnValue(
           throwError({
             status: 400,
-            error: { type: EMAIL_ALREADY_USED_TYPE }
+            error: { type: EMAIL_ALREADY_USED_TYPE },
           })
         );
         comp.registerForm.patchValue({
           password: 'password',
-          confirmPassword: 'password'
+          confirmPassword: 'password',
         });
 
         comp.register();
         tick();
 
-        expect(comp.errorEmailExists).toEqual('ERROR');
-        expect(comp.errorUserExists).toBeNull();
-        expect(comp.error).toBeNull();
+        expect(comp.errorEmailExists).toBe(true);
+        expect(comp.errorUserExists).toBe(false);
+        expect(comp.error).toBe(false);
       })
     ));
 
     it('should notify of generic error', inject(
-      [Register],
-      fakeAsync((service: Register) => {
+      [RegisterService],
+      fakeAsync((service: RegisterService) => {
         spyOn(service, 'save').and.returnValue(
           throwError({
-            status: 503
+            status: 503,
           })
         );
         comp.registerForm.patchValue({
           password: 'password',
-          confirmPassword: 'password'
+          confirmPassword: 'password',
         });
 
         comp.register();
         tick();
 
-        expect(comp.errorUserExists).toBeNull();
-        expect(comp.errorEmailExists).toBeNull();
-        expect(comp.error).toEqual('ERROR');
+        expect(comp.errorUserExists).toBe(false);
+        expect(comp.errorEmailExists).toBe(false);
+        expect(comp.error).toBe(true);
       })
     ));
   });

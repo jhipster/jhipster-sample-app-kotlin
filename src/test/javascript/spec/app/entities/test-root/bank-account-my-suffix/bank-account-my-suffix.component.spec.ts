@@ -17,7 +17,6 @@ describe('Component Tests', () => {
       TestBed.configureTestingModule({
         imports: [JhipsterTestModule],
         declarations: [BankAccountMySuffixComponent],
-        providers: []
       })
         .overrideTemplate(BankAccountMySuffixComponent, '')
         .compileComponents();
@@ -34,7 +33,7 @@ describe('Component Tests', () => {
         of(
           new HttpResponse({
             body: [new BankAccountMySuffix(123)],
-            headers
+            headers,
           })
         )
       );
@@ -44,7 +43,7 @@ describe('Component Tests', () => {
 
       // THEN
       expect(service.query).toHaveBeenCalled();
-      expect(comp.bankAccounts[0]).toEqual(jasmine.objectContaining({ id: 123 }));
+      expect(comp.bankAccounts && comp.bankAccounts[0]).toEqual(jasmine.objectContaining({ id: 123 }));
     });
   });
 });

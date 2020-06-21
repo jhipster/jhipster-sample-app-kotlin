@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { JhiParseLinks, JhiAlertService } from 'ng-jhipster';
+import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
+import { combineLatest } from 'rxjs';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { Audit } from './audit.model';
@@ -10,114 +10,106 @@ import { AuditsService } from './audits.service';
 
 @Component({
   selector: 'jhi-audit',
-  templateUrl: './audits.component.html'
+  templateUrl: './audits.component.html',
 })
-export class AuditsComponent implements OnInit, OnDestroy {
-  audits: Audit[];
-  fromDate: string;
-  itemsPerPage: any;
-  links: any;
-  page: number;
-  routeData: any;
-  predicate: any;
-  previousPage: any;
-  reverse: boolean;
-  toDate: string;
-  totalItems: number;
+export class AuditsComponent implements OnInit {
+  audits?: Audit[];
+  fromDate = '';
+  itemsPerPage = ITEMS_PER_PAGE;
+  page!: number;
+  predicate!: string;
+  ascending!: boolean;
+  toDate = '';
+  totalItems = 0;
+
+  private dateFormat = 'yyyy-MM-dd';
 
   constructor(
     private auditsService: AuditsService,
-    private alertService: JhiAlertService,
-    private parseLinks: JhiParseLinks,
     private activatedRoute: ActivatedRoute,
     private datePipe: DatePipe,
     private router: Router
-  ) {
-    this.itemsPerPage = ITEMS_PER_PAGE;
-    this.routeData = this.activatedRoute.data.subscribe(data => {
-      this.page = data['pagingParams'].page;
-      this.previousPage = data['pagingParams'].page;
-      this.reverse = data['pagingParams'].ascending;
-      this.predicate = data['pagingParams'].predicate;
-    });
+  ) {}
+
+  ngOnInit(): void {
+    this.toDate = this.today();
+    this.fromDate = this.previousMonth();
+    this.handleNavigation();
   }
 
-  ngOnInit() {
-    this.today();
-    this.previousMonth();
-    this.loadAll();
+  canLoad(): boolean {
+    return this.fromDate !== '' && this.toDate !== '';
   }
 
-  ngOnDestroy() {
-    this.routeData.unsubscribe();
-  }
-
-  previousMonth() {
-    const dateFormat = 'yyyy-MM-dd';
-    let fromDate: Date = new Date();
-
-    if (fromDate.getMonth() === 0) {
-      fromDate = new Date(fromDate.getFullYear() - 1, 11, fromDate.getDate());
-    } else {
-      fromDate = new Date(fromDate.getFullYear(), fromDate.getMonth() - 1, fromDate.getDate());
+  transition(): void {
+    if (this.canLoad()) {
+      this.router.navigate(['/admin/audits'], {
+        queryParams: {
+          page: this.page,
+          sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
+          from: this.fromDate,
+          to: this.toDate,
+        },
+      });
     }
-
-    this.fromDate = this.datePipe.transform(fromDate, dateFormat);
   }
 
-  today() {
-    const dateFormat = 'yyyy-MM-dd';
+  private previousMonth(): string {
+    let date = new Date();
+    if (date.getMonth() === 0) {
+      date = new Date(date.getFullYear() - 1, 11, date.getDate());
+    } else {
+      date = new Date(date.getFullYear(), date.getMonth() - 1, date.getDate());
+    }
+    return this.datePipe.transform(date, this.dateFormat)!;
+  }
+
+  private today(): string {
     // Today + 1 day - needed if the current day must be included
-    const today: Date = new Date();
-    today.setDate(today.getDate() + 1);
-    const date = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    this.toDate = this.datePipe.transform(date, dateFormat);
+    const date = new Date();
+    date.setDate(date.getDate() + 1);
+    return this.datePipe.transform(date, this.dateFormat)!;
   }
 
-  loadAll() {
+  private handleNavigation(): void {
+    combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
+      const page = params.get('page');
+      this.page = page !== null ? +page : 1;
+      const sort = (params.get('sort') ?? data['defaultSort']).split(',');
+      this.predicate = sort[0];
+      this.ascending = sort[1] === 'asc';
+      if (params.get('from')) {
+        this.fromDate = this.datePipe.transform(params.get('from'), this.dateFormat)!;
+      }
+      if (params.get('to')) {
+        this.toDate = this.datePipe.transform(params.get('to'), this.dateFormat)!;
+      }
+      this.loadData();
+    }).subscribe();
+  }
+
+  private loadData(): void {
     this.auditsService
       .query({
         page: this.page - 1,
         size: this.itemsPerPage,
         sort: this.sort(),
         fromDate: this.fromDate,
-        toDate: this.toDate
+        toDate: this.toDate,
       })
-      .subscribe((res: HttpResponse<Audit[]>) => this.onSuccess(res.body, res.headers), (res: HttpResponse<any>) => this.onError(res.body));
+      .subscribe((res: HttpResponse<Audit[]>) => this.onSuccess(res.body, res.headers));
   }
 
-  sort() {
-    const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
+  private sort(): string[] {
+    const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
     if (this.predicate !== 'id') {
       result.push('id');
     }
     return result;
   }
 
-  loadPage(page: number) {
-    if (page !== this.previousPage) {
-      this.previousPage = page;
-      this.transition();
-    }
-  }
-
-  transition() {
-    this.router.navigate(['/admin/audits'], {
-      queryParams: {
-        page: this.page,
-        sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-      }
-    });
-    this.loadAll();
-  }
-
-  private onSuccess(data, headers) {
-    this.links = this.parseLinks.parse(headers.get('link'));
-    this.totalItems = headers.get('X-Total-Count');
-    this.audits = data;
-  }
-
-  private onError(error) {
-    this.alertService.error(error.error, error.message, null);
+  private onSuccess(audits: Audit[] | null, headers: HttpHeaders): void {
+    this.totalItems = Number(headers.get('X-Total-Count'));
+    this.audits = audits || [];
   }
 }

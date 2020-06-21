@@ -2,51 +2,58 @@
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-bank-account-my-suffix-heading" jhiTranslate="jhipsterApp.testRootBankAccount.home.createOrEditLabel">Create or edit a Bank Account</h2>
+
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!editForm.get('id').value">
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
-                        readonly />
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="jhipsterApp.testRootBankAccount.name" for="field_name">Name</label>
                     <input type="text" class="form-control" name="name" id="field_name"
                            formControlName="name"/>
-                    <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched)">
+                    <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
                         <small class="form-text text-danger"
-                               *ngIf="editForm.get('name').errors.required" jhiTranslate="entity.validation.required">
+                               *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                         </small>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="jhipsterApp.testRootBankAccount.bankNumber" for="field_bankNumber">Bank Number</label>
                     <input type="number" class="form-control" name="bankNumber" id="field_bankNumber"
                            formControlName="bankNumber"/>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="jhipsterApp.testRootBankAccount.agencyNumber" for="field_agencyNumber">Agency Number</label>
                     <input type="number" class="form-control" name="agencyNumber" id="field_agencyNumber"
                            formControlName="agencyNumber"/>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="jhipsterApp.testRootBankAccount.lastOperationDuration" for="field_lastOperationDuration">Last Operation Duration</label>
                     <input type="number" class="form-control" name="lastOperationDuration" id="field_lastOperationDuration"
                            formControlName="lastOperationDuration"/>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="jhipsterApp.testRootBankAccount.meanOperationDuration" for="field_meanOperationDuration">Mean Operation Duration</label>
                     <input type="number" class="form-control" name="meanOperationDuration" id="field_meanOperationDuration"
                            formControlName="meanOperationDuration"/>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="jhipsterApp.testRootBankAccount.balance" for="field_balance">Balance</label>
                     <input type="number" class="form-control" name="balance" id="field_balance"
                            formControlName="balance"/>
-                    <div *ngIf="editForm.get('balance').invalid && (editForm.get('balance').dirty || editForm.get('balance').touched)">
+                    <div *ngIf="editForm.get('balance')!.invalid && (editForm.get('balance')!.dirty || editForm.get('balance')!.touched)">
                         <small class="form-text text-danger"
-                               *ngIf="editForm.get('balance').errors.required" jhiTranslate="entity.validation.required">
+                               *ngIf="editForm.get('balance')?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                         </small>
                         <small class="form-text text-danger"
@@ -55,43 +62,48 @@
                         </small>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="jhipsterApp.testRootBankAccount.openingDay" for="field_openingDay">Opening Day</label>
                     <div class="input-group">
-                        <input id="field_openingDay" type="text" class="form-control" name="openingDay" ngbDatepicker  #openingDayDp="ngbDatepicker" formControlName="openingDay"/>
+                        <input id="field_openingDay" type="text" class="form-control" name="openingDay" ngbDatepicker #openingDayDp="ngbDatepicker" formControlName="openingDay"/>
                         <span class="input-group-append">
-                            <button type="button" class="btn btn-secondary" (click)="openingDayDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                            <button type="button" class="btn btn-secondary" (click)="openingDayDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
                         </span>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="jhipsterApp.testRootBankAccount.lastOperationDate" for="field_lastOperationDate">Last Operation Date</label>
                     <div class="d-flex">
                         <input id="field_lastOperationDate" type="datetime-local" class="form-control" name="lastOperationDate" formControlName="lastOperationDate" placeholder="YYYY-MM-DD HH:mm"/>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="jhipsterApp.testRootBankAccount.active" for="field_active">Active</label>
                     <input type="checkbox" class="form-control" name="active" id="field_active"
                            formControlName="active"/>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="jhipsterApp.testRootBankAccount.accountType" for="field_accountType">Account Type</label>
                     <select class="form-control" name="accountType" formControlName="accountType" id="field_accountType">
-                        <option value="CHECKING">{{'jhipsterApp.BankAccountType.CHECKING' | translate}}</option>
-                        <option value="SAVINGS">{{'jhipsterApp.BankAccountType.SAVINGS' | translate}}</option>
-                        <option value="LOAN">{{'jhipsterApp.BankAccountType.LOAN' | translate}}</option>
+                        <option value="CHECKING">{{ 'jhipsterApp.BankAccountType.CHECKING' | translate }}</option>
+                        <option value="SAVINGS">{{ 'jhipsterApp.BankAccountType.SAVINGS' | translate }}</option>
+                        <option value="LOAN">{{ 'jhipsterApp.BankAccountType.LOAN' | translate }}</option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="jhipsterApp.testRootBankAccount.attachment" for="field_attachment">Attachment</label>
                     <div>
-                        <div *ngIf="editForm.get('attachment').value" class="form-text text-danger clearfix">
-                            <a class="pull-left" (click)="openFile(editForm.get('attachmentContentType').value, editForm.get('attachment').value)" jhiTranslate="entity.action.open">open</a><br>
-                            <span class="pull-left">{{editForm.get('attachmentContentType').value}}, {{byteSize(editForm.get('attachment').value)}}</span>
+                        <div *ngIf="editForm.get('attachment')!.value" class="form-text text-danger clearfix">
+                            <a class="pull-left" (click)="openFile(editForm.get('attachmentContentType')!.value, editForm.get('attachment')!.value)" jhiTranslate="entity.action.open">open</a><br>
+                            <span class="pull-left">{{ editForm.get('attachmentContentType')!.value }}, {{ byteSize(editForm.get('attachment')!.value) }}</span>
                             <button type="button" (click)="editForm.patchValue({attachment: null});editForm.patchValue({attachmentContentType: null});"
                                     class="btn btn-secondary btn-xs pull-right">
-                                <fa-icon [icon]="'times'"></fa-icon>
+                                <fa-icon icon="times"></fa-icon>
                             </button>
                         </div>
                         <input type="file" id="file_attachment" (change)="setFileData($event, 'attachment', false)" jhiTranslate="entity.action.addblob"/>
@@ -101,6 +113,7 @@
                     <input type="hidden" class="form-control" name="attachmentContentType" id="field_attachmentContentType"
                            formControlName="attachmentContentType" />
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="jhipsterApp.testRootBankAccount.description" for="field_description">Description</label>
                     <textarea class="form-control" name="description" id="field_description"
@@ -111,16 +124,18 @@
                     <label class="form-control-label" jhiTranslate="jhipsterApp.testRootBankAccount.user" for="field_user">User</label>
                     <select class="form-control" id="field_user" name="user" formControlName="userId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
                     </select>
                 </div>
             </div>
+
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
-                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
+
                 <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>
         </form>
