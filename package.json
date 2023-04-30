@@ -49,7 +49,7 @@
     "@typescript-eslint/parser": "2.30.0",
     "autoprefixer": "9.7.6",
     "base-href-webpack-plugin": "2.0.0",
-    "browser-sync": "2.26.7",
+    "browser-sync": "2.29.1",
     "browser-sync-webpack-plugin": "2.2.2",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
